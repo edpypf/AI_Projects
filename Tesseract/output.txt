@@ -1,0 +1,1 @@
+display content of txt file in command line of windows

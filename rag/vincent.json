@@ -1,0 +1,26 @@
+[
+  {
+    "prompt": "Summarize candidate's background in one paragraph.",
+    "completion": "Over 20 years of experience in data warehouse solution design and implementation, with strong expertise in cloud migration (Databricks, Snowflake), pipeline framework optimization, data quality automation, and handling unstructured data in aviation, retail, healthcare, financial services, and more."
+  },
+  {
+    "prompt": "List candidate's core technical expertise.",
+    "completion": "Data Vault, Dimensional Modeling, Azure Cloud, ETL/ELT Pipeline Design, Databricks, Snowflake, BI Architecture, GCP Bigquery, Data Quality Framework, Workflow Automation."
+  },
+  {
+    "prompt": "Summarize professional experience at IMCO.",
+    "completion": "Sr. Data Engineer at IMCO (Mar 2023 - Present). Designed and implemented ingestion and integration frameworks on Databricks and Snowflake, automated CDC and QA testing, led Snowflake POC and migration roadmap, trained development team, developed enterprise data warehouse pipelines, and optimized deletion logic and data integrity."
+  },
+  {
+    "prompt": "Summarize professional experience at Air Canada.",
+    "completion": "Sr. Cloud Data Engineer at Air Canada (Aug 2021 – Feb 2023). Implemented Databricks/Snowflake data warehouse for Kilo Project, led Teradata-to-Snowflake migration (Argo Project), redesigned SalesView with streaming feeds, built validation automation frameworks, and evaluated cloud integration tools for enterprise migration."
+  },
+  {
+    "prompt": "Summarize education background.",
+    "completion": "Bachelor of Engineering in Information Management, Harbin University of Science and Technology, 1994."
+  },
+  {
+    "prompt": "List certifications and trainings.",
+    "completion": "TensorFlow 2 & Keras Bootcamp (Udemy, 2021), Python for Data Science & Machine Learning (Udemy, 2020), MicroStrategy Certified Engineer Principle (2007)."
+  }
+]

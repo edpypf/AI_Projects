@@ -1,0 +1,367 @@
+In the agricultural domain, the deployment of large language models (LLMs) is hindered by the lack of training data and evaluation benchmarks. To mitigate this issue, we propose AgriEval, the first comprehensive Chinese agricultural benchmark with three main characteristics: (1) Comprehensive Capability Evaluation. AgriEval covers six major agriculture categories and 29 subcategories within agriculture, addressing four core cognitive scenarios: memorization, understanding, inference, and generation. (2) High-Quality Data. The dataset is curated from university-level examinations and assignments, providing a natural and robust benchmark for assessing the capacity of LLMs to apply knowledge and make expert-like decisions. (3) Diverse Formats and Extensive Scale. AgriEval comprises 14,697 multiple-choice questions and 2,167 open-ended question-and-answer questions, establishing it as the most extensive agricultural benchmark available to date. We also present comprehensive experimental results over 51 open-source and commercial LLMs. The experimental results reveal that most existing LLMs struggle to achieve 60% accuracy, underscoring the developmental potential in agricultural LLMs. Additionally, we conduct extensive experiments to investigate factors influencing model performance and propose strategies for enhancement. AgriEval is available at this https URL.
+
+Large Language Models (LLMs) often produce plausible but poorly-calibrated answers, limiting their reliability on reasoning-intensive tasks. We present Reinforcement Learning from Self-Feedback (RLSF), a post-training stage that uses the model's own confidence as an intrinsic reward, mimicking how humans learn in the absence of external feedback. After a frozen LLM generates several chain-of-thought solutions, we define and compute the confidence of each final answer span and rank the traces accordingly. These synthetic preferences are then used to fine-tune the policy with standard preference optimization, similar to RLHF yet requiring no human labels, gold answers, or externally curated rewards.
+RLSF simultaneously (i) refines the model's probability estimates -- restoring well-behaved calibration -- and (ii) strengthens step-by-step reasoning, yielding improved performance on arithmetic reasoning and multiple-choice question answering.
+By turning a model's own uncertainty into useful self-feedback, RLSF affirms reinforcement learning on intrinsic model behaviour as a principled and data-efficient component of the LLM post-training pipeline and warrents further research in intrinsic rewards for LLM post-training.
+
+Vietnam ranks among the top countries in terms of both internet traffic and online toxicity. As a result, implementing embedding models for recommendation and content control duties in applications is crucial. However, a lack of large-scale test datasets, both in volume and task diversity, makes it tricky for scientists to effectively evaluate AI models before deploying them in real-world, large-scale projects. To solve this important problem, we introduce a Vietnamese benchmark, VN-MTEB for embedding models, which we created by translating a large number of English samples from the Massive Text Embedding Benchmark using our new automated framework. We leverage the strengths of large language models (LLMs) and cutting-edge embedding models to conduct translation and filtering processes to retain high-quality samples, guaranteeing a natural flow of language and semantic fidelity while preserving named entity recognition (NER) and code snippets. Our comprehensive benchmark consists of 41 datasets from six tasks specifically designed for Vietnamese text embeddings. In our analysis, we find that bigger and more complex models using Rotary Positional Embedding outperform those using Absolute Positional Embedding in embedding tasks. Datasets are available at HuggingFace: this https URL
+
+We present HumorBench, a benchmark designed to evaluate large language models' (LLMs) ability to reason about and explain sophisticated humor in cartoon captions. As reasoning models increasingly saturate existing benchmarks in mathematics and science, novel and challenging evaluations of model intelligence beyond STEM domains are essential. Reasoning is fundamentally involved in text-based humor comprehension, requiring the identification of connections between concepts in cartoons/captions and external cultural references, wordplays, and other mechanisms. HumorBench includes approximately 300 unique cartoon-caption pairs from the New Yorker Caption Contest and this http URL, with expert-annotated evaluation rubrics identifying essential joke elements. LLMs are evaluated based on their explanations towards the humor and abilities in identifying the joke elements. To perform well on this task, models must form and test hypotheses about associations between concepts, potentially backtracking from initial interpretations to arrive at the most plausible explanation. Our extensive benchmarking of current SOTA models reveals three key insights: (1) LLM progress on STEM reasoning transfers effectively to humor comprehension; (2) models trained exclusively on STEM reasoning data still perform well on HumorBench, demonstrating strong transferability of reasoning abilities; and (3) test-time scaling by increasing thinking token budgets yields mixed results across different models in humor reasoning.
+
+Large Language Models (LLMs) excel at many reasoning tasks but struggle with knowledge-intensive queries due to their inability to dynamically access up-to-date or domain-specific information. Retrieval-Augmented Generation (RAG) has emerged as a promising solution, enabling LLMs to ground their responses in external sources. However, existing RAG methods lack fine-grained control over both the query and source sides, often resulting in noisy retrieval and shallow reasoning. In this work, we introduce DeepSieve, an agentic RAG framework that incorporates information sieving via LLM-as-a-knowledge-router. DeepSieve decomposes complex queries into structured sub-questions and recursively routes each to the most suitable knowledge source, filtering irrelevant information through a multi-stage distillation process. Our design emphasizes modularity, transparency, and adaptability, leveraging recent advances in agentic system design. Experiments on multi-hop QA tasks across heterogeneous sources demonstrate improved reasoning depth, retrieval precision, and interpretability over conventional RAG approaches. Our codes are available at this https URL.
+
+As large language models (LLMs) are increasingly deployed in high-risk domains such as law, finance, and medicine, systematically evaluating their domain-specific safety and compliance becomes critical. While prior work has largely focused on improving LLM performance in these domains, it has often neglected the evaluation of domain-specific safety risks. To bridge this gap, we first define domain-specific safety principles for LLMs based on the AMA Principles of Medical Ethics, the ABA Model Rules of Professional Conduct, and the CFA Institute Code of Ethics. Building on this foundation, we introduce Trident-Bench, a benchmark specifically targeting LLM safety in the legal, financial, and medical domains. We evaluated 19 general-purpose and domain-specialized models on Trident-Bench and show that it effectively reveals key safety gaps -- strong generalist models (e.g., GPT, Gemini) can meet basic expectations, whereas domain-specialized models often struggle with subtle ethical nuances. This highlights an urgent need for finer-grained domain-specific safety improvements. By introducing Trident-Bench, our work provides one of the first systematic resources for studying LLM safety in law and finance, and lays the groundwork for future research aimed at reducing the safety risks of deploying LLMs in professionally regulated fields. Code and benchmark will be released at: this https URL
+
+As large reasoning models (LRMs) grow more capable, chain-of-thought (CoT) reasoning introduces new safety challenges. Existing SFT-based safety alignment studies dominantly focused on filtering prompts with safe, high-quality responses, while overlooking hard prompts that always elicit harmful outputs. To fill this gap, we introduce UnsafeChain, a safety alignment dataset constructed from hard prompts with diverse sources, where unsafe completions are identified and explicitly corrected into safe responses. By exposing models to unsafe behaviors and guiding their correction, UnsafeChain enhances safety while preserving general reasoning ability. We fine-tune three LRMs on UnsafeChain and compare them against recent SafeChain and STAR-1 across six out-of-distribution and five in-distribution benchmarks. UnsafeChain consistently outperforms prior datasets, with even a 1K subset matching or surpassing baseline performance, demonstrating the effectiveness and generalizability of correction-based supervision. We release our dataset and code at this https URL
+
+Large Language Models (LLMs), when enhanced through reasoning-oriented post-training, evolve into powerful Large Reasoning Models (LRMs). Tool-Integrated Reasoning (TIR) further extends their capabilities by incorporating external tools, but existing methods often rely on rigid, predefined tool-use patterns that risk degrading core language competence. Inspired by the human ability to adaptively select tools, we introduce AutoTIR, a reinforcement learning framework that enables LLMs to autonomously decide whether and which tool to invoke during the reasoning process, rather than following static tool-use strategies. AutoTIR leverages a hybrid reward mechanism that jointly optimizes for task-specific answer correctness, structured output adherence, and penalization of incorrect tool usage, thereby encouraging both precise reasoning and efficient tool integration. Extensive evaluations across diverse knowledge-intensive, mathematical, and general language modeling tasks demonstrate that AutoTIR achieves superior overall performance, significantly outperforming baselines and exhibits superior generalization in tool-use behavior. These results highlight the promise of reinforcement learning in building truly generalizable and scalable TIR capabilities in LLMs. The code and data are available at this https URL.
+
+We introduce JobBERT-V3, a contrastive learning-based model for cross-lingual job title matching. Building on the state-of-the-art monolingual JobBERT-V2, our approach extends support to English, German, Spanish, and Chinese by leveraging synthetic translations and a balanced multilingual dataset of over 21 million job titles. The model retains the efficiency-focused architecture of its predecessor while enabling robust alignment across languages without requiring task-specific supervision. Extensive evaluations on the TalentCLEF 2025 benchmark demonstrate that JobBERT-V3 outperforms strong multilingual baselines and achieves consistent performance across both monolingual and cross-lingual settings. While not the primary focus, we also show that the model can be effectively used to rank relevant skills for a given job title, demonstrating its broader applicability in multilingual labor market intelligence. The model is publicly available: this https URL.
+
+Inference.ai
+
+ML Engineering Mentorship Program
+
+Assignments and Projects Guide July 2025
+
+This guide outlines the core weekly assignments and project deliverables
+that make up the backbone of your ML Engineering Mentorship Program
+experience. Each week, you'll build a real-world system that reflects what
+AI/ML engineers actually do in production — from deploying local LLM
+agents to developing voice-based assistants and fine-tuning your own
+models.
+
+The projects are intentionally scoped to reinforce the engineering skills
+that matter in today's Al landscape: data processing, tool integration,
+
+evaluation, and iterative improvement.
+
+You'll start by building modular components (like OCR pipelines, voice
+interfaces, and retrievers), and by the end of the program and demo-day,
+you ll combine them into a complete, portfolio presentation-ready research
+
+assistant powered by your own workflows.
+
+==================================================
+@yInference.ai
+
+Note: All code notebooks, starter templates, and datasets are provided
+once the program begins. What you see here is a preview of the hands-on
+projects you'll tackle — a glimpse into the practical, portfolio-ready work
+that will define your experience.
+
+Agent Workflows & Local LLM Implementation
+
+Intro: Kick off the program by learning how to design and orchestrate Al agents
+using real-world tools. You'll explore the MCP (Modular Command Pipeline)
+architecture and build workflows using a plugin ecosystem that includes GitHub,
+Puppeteer, Notion, and more. You'll also deploy a local LLM with Ollama, using
+OpenAl-compatible endpoints, and learn the fundamentals of LangChain, including
+LCEL syntax and how to chain components into runnable pipelines.
+
+Assignment:
+
+1. Implement an MCP-style agent capable of executing six plugin-driven operations:
+Brave Search — GitHub — Puppeteer — Filesystem — Sequential Thinking —
+Notion
+
+2. (Advanced Optional) Extend your agent to automatically scrape web content and
+generate structured documentation in Notion.
+
+Deliverables:
+1. Functional agent script demonstrating plugin orchestration
+2. Optional advanced web-to-Notion documentation pipeline
+
+y Data Extraction & Corpus Construction
+
+Intro: This week is all about transforming unstructured data into clean, usable
+corpora. You'll optimize OCR pipelines using Tesseract (including layout tuning and
+multilingual settings), extract text from PDFs and HTML, and convert them into
+embedding-ready formats. You'll also learn how to assess and improve dataset
+quality through deduplication (via MinHash), PII removal, and metadata validation.
+
+==================================================
+@)Inference.ai
+
+Project:
+1. arXiv Paper Processing:
+a. Scrape 200 NLP research papers from arXiv (cs.CL category) using Trafilatura
+b. Run dual extraction pipelines:
+i. Clean HTML to arxiv_clean.json
+li. OCR-extracted PDF text to pdf_ocr/ folder
+- Submit a compressed, cleaned dataset (s1MB) and an OCR quality report
+2. Multimodal Transcription:
+a. Download 10 NLP-related YouTube talks using yt-dlp
+b. Transcribe and timestamp the audio into a structured talks_transcripts.jsonl
+file
+3. Corpus Refinement:
+a. Merge outputs from previous steps into a single dataset
+b. Apply a cleaning and validation pipeline to ensure data quality and
+consistency
+
+Deliverables:
+
+1. Combined processing scripts
+
+2. Final cleaned dataset
+
+3. Validation report with quality metrics
+
+Voice Agent Development
+
+Intro: This week, you'll build a voice-enabled Al agent capable of real-time
+conversation. You'll design the full stack: automatic speech recognition (ASR), a
+local LLM-based dialogue engine, and text-to-speech (TTS) synthesis. You'll also
+learn how to manage conversational state, maintain context across multiple turns,
+and optimize for low latency.
+
+Project:
+
+1. Set up a FastAPI server to handle requests
+
+2. Integrate ASR using whisper.cpp or Google Speech-to-Text
+
+3. Generate responses using the Llama 3 8B model (via HuggingFace textgeneration
+pipeline)
+
+4. Synthesize responses with Cozyvoice or other TTS system
+
+5. Submit an end-to-end demo capable of 5+ continuous back-and-forth turns
+
+==================================================
+@yInference.ai
+
+Deliverables:
+1. Code repository
+2. 2-minute demo video showing full voice interaction loop
+
+‘4 RAG for arXiv Paper Processing
+
+Intro: Dive into RAG systems by designing a document retriever and reader pipeline
+for academic papers. You'll implement chunking strategies, handle LaTeX-heavy
+formats, and extract relevant metadata. This module focuses on understanding
+document structure and deploying performant retrieval pipelines.
+
+Project:
+
+1. Scrape 50 recent arXiv papers from the cs.CL category (including PDF and
+metadata)
+
+2. Use PyMuPDF to extract and section text (<512 tokens per chunk)
+
+3. Build a FAISS index using all-MiniLM-L6-v2 sentence embeddings
+
+4. Implement a simple API to query the index and return the top 3 most relevant
+passages
+
+Deliverables:
+1. Jupyter Notebook containing code and retrieval logic
+2. A test report with 5 example queries and output passages
+
+7 Embedding Database Optimization
+
+Intro: This week focuses on improving the performance and versatility of your
+retrieval system. You'll enhance embedding quality through normalization and
+optional dimensionality reduction, and explore hybrid search—combining keyword
+and vector-based retrieval. You'll also design a lightweight but powerful database
+schema to support multimodal querying.
+
+Project:
+1. Upgrade your RAG system to a multimodal database:
+a. Encode text chunks with text-embedding-3-small
+b. Optionally generate image embeddings with CLIP for figures
+
+==================================================
+@yInference.ai
+
+1. Implement hybrid retrieval that blends BM25 (keyword) and vector search
+2. Evaluate search quality improvement over pure vector search
+
+Deliverables:
+1. Database schema diagram
+2. Retrieval performance comparison showing 210% recall gain
+
+LLM Function Calling for Agents
+
+Intro: Learn how to extend your voice agent with tool-augmented reasoning. This
+module introduces OpenAl-style function calling and dynamic tool selection based
+on LLM intent parsing. You'll build logic that allows your agent to trigger different
+tools in response to natural queries.
+
+Project:
+
+1. Integrate two new tools into your voice agent:
+a. Search_arxiv(query) — taps into your Week 5 database
+b. Calculate(expression) — evaluates math expressions
+
+2. Use Llama 3’s function-calling abilities to detect user intents and auto-route to
+the correct tools
+
+3. Build an execution chain that returns voice responses
+
+Deliverables:
+1. Extended voice agent codebase
+2. Logs of at least 3 function call examples
+
+/ Fine-tuning with Synthetic Data
+
+Intro: This week, you'll explore how to generate high-quality synthetic training data and
+fine-tune open-source models for specialized use cases. You'll learn prompt
+engineering techniques using GPT-4 (including role-play and counterfactual
+strategies), structure data for instruction tuning, and run efficient fine-tuning
+workflows using QLOoRA and the PEFT library.
+
+Assignment:
+1. Select 100 arXiv papers and generate 5 question-answer pairs per abstract using
+
+GPT-4 Turbo.
+
+==================================================
+@yInference.ai
+
+1. Include "misinterpretation" examples and corrections to simulate real-world user
+
+misunderstandings.
+2. Fine-tune the Llama 3 8B model using Unsloth on Colab with QLoRA (4-bit) for
+
+resource efficiency.
+3. Evaluate your model's performance on academic Q&A using human-labeled
+
+accuracy comparisons (pre/post tuning).
+
+Deliverables:
+
+1. Synthetic dataset in JSONL format
+
+2. Fine-tuning script
+
+3. Evaluation report comparing QA accuracy
+
+Summarization with Expert Models
+
+Intro: Explore how to generate and evaluate high-quality technical summaries using
+state-of-the-art models. This week covers multimodal inputs, advanced
+summarization models, and preference-based reward training. You'll also experiment
+with model routing based on input types.
+
+Project:
+
+1. Build a summarization system:
+a. Use DeepSeek-VL to process text + figures
+b. Generate summaries using Mixtral 8x22B
+
+2. Collect human preferences (Summary A vs. B) and fine-tune a DeBERTa-v3 reward
+model
+
+3. Output quality-scored summaries across 10 papers
+
+Deliverables:
+
+1. Summarization pipeline code
+
+2. Trained reward model
+
+3. Summary results with quality ratings
+
+==================================================
+Intro: In this final stretch, you'll combine everything you've built into a complete
+voice-powered research assistant. It will be capable of live conversation, document
+retrieval, summarization, and automated Notion sync—creating a seamless research
+interface.
+
+Project:
+1. Build a full pipeline:
+a. Take voice input — identify relevant paper fragments — generate spoken
+answer
+b. Automatically summarize conversation + paper content after session ends
+c. Sync final output to Notion via your Week 1 integration
+2. Use a realistic demo case (e.g. new paper — voice Q&A — synced summary)
+
+Deliverables:
+1. Fully runnable local assistant
+2. System demo video (60 seconds)
+
+==================================================
+
+Our third finalist is Emily Johnston from the School of Pharmacy and Medical Sciences.
+
+Her presentation title is Mosquito Research, Saving Lives with Panty Hose and Paperclips.
+
+I came to Australia to study the deadliest animal in the world.
+
+Now there may be some Australian audience members thinking,
+
+''Strooos! Science is finally recognized the importance of the drop bears!''
+
+But I'm not studying drop bears because around the world by transmitting diseases like malaria
+
+and dengue fever, mosquitoes kill more than a million people every year, making them
+
+the deadliest animal in the planet.
+
+Now in Australia the most common mosquito-borne disease is Ross River virus and it occurs
+
+at high rates in some areas but not others.
+
+My question is why? What is it about certain areas that make some breed disease?
+
+If we can understand the environmental factors that contribute to disease transmission,
+
+then we can alter the environment or target our control efforts to prevent human infections.
+
+But to answer that question I had to find out where the infected mosquitoes were in
+
+South Australia and traditionally testing mosquitoes for virus has always been difficult.
+
+So I used a new technique. It takes these cards which are embedded with virus preserving
+
+chemicals and coats them in honey. Mosquitoes will come to feed on the honey and in the
+
+process spit virus onto the card where it can later be detected.
+
+Now no one had ever used this technique in a broad-scale virus survey before so I had
+
+to adapt it. I developed new traps and set them at over 100 fields site across South
+
+Australia. Then I captured over 20,000 hungry mosquitoes and let them feed on the card
+
+for a week before testing the cards for virus.
+
+Now you may not think that these traps look very impressive but science doesn't have
+
+to be beautiful. It has to be effective and these traps are proving to be our most sensitive
+
+method of detecting infected mosquitoes. I found three types of infection,
+
+Ross River virus, Barma Forest virus and Stratford virus which has never before been found in
+
+South Australia. I now have the virus data I need to conduct my analysis and I'm collecting
+
+publicly available data about the environment surrounding my traps like the density of human
+
+housing, the biodiversity of mammals and the ratio of green space to buildings to see
+
+if any of those environmental factors can link these virus hotspots that I've shown
+
+here. But the most exciting part of my research so far has been the success of this method.
+
+Public health officials in Victoria, Queensland and Western Australia have been in contact
+
+with us about implementing this technique for their surveillance next year.
+
+And I developed these traps in a tight budget. I used recycled milk cartons, pantyhose
+
+and paperclips to make the traps. Each trap costs less than a dollar and can be reused
+
+for the whole season. That was important to me because the majority of mosquito-borne
+
+disease risk happens in economically impoverished countries. In India for example where about
+
+a quarter of the population lives on a dollar a day there are 33 million cases of dengue
+
+infection every year. With my low budget virus surveillance and spatial analysis method
+
+I can help any country regardless of resources find out where their deadliest animals occur,
+
+why they're there and how we can stop them from infecting humans. Thanks.
+

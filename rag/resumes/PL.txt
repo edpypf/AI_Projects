@@ -1,0 +1,190 @@
+Retail Loss Prevention ML Platform (2023-2024)
+Built end-to-end ML system detecting unusual patterns in 500+ stores' transaction data to prevent loss. 
+
+Key Work:
+- Developed real-time fraud detection models analyzing POS transactions, inventory movements, and employee patterns
+- Created automated alerts for high-risk transactions (refunds, voids, discounts) with 92% accuracy
+- Built daily model retraining pipeline processing 2M+ transactions from 3,000+ POS terminals
+- Set up monitoring dashboard tracking false positive rates, detection accuracy, and $ saved
+
+Business Impact:
+- Identified $2.8M potential losses in first 6 months
+- Cut false alerts by 60% using feedback loop
+- Reduced investigation time from 2 days to 4 hours
+
+Tech Stack:
+- AWS SageMaker for model training/deployment 
+- S3 data lake with Glue ETL
+- DynamoDB for real-time scoring
+- Lambda for alert generation
+- QuickSight dashboards for LP team
+
+import boto3
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+from sagemaker.sklearn import SKLearn
+from sagemaker.processing import ProcessingInput, ProcessingOutput
+
+class RetailLossDetection:
+    def __init__(self):
+        self.sagemaker_session = boto3.Session()
+        self.dynamodb = boto3.resource('dynamodb')
+        self.s3 = boto3.client('s3')
+        
+    def extract_pos_data(self, start_date, end_date):
+        """Extract POS transactions for feature engineering"""
+        query = """
+            SELECT 
+                transaction_id,
+                store_id,
+                employee_id,
+                register_id,
+                transaction_time,
+                transaction_total,
+                discount_amount,
+                refund_flag,
+                void_flag,
+                item_count,
+                payment_type
+            FROM pos_transactions 
+            WHERE transaction_date BETWEEN :start_date AND :end_date
+        """
+        # Execute query and return dataframe
+        
+    def engineer_features(self, df):
+        """Create fraud detection features"""
+        features = []
+        
+        # Transaction pattern features
+        df['hour_of_day'] = df['transaction_time'].dt.hour
+        df['is_weekend'] = df['transaction_time'].dt.weekday >= 5
+        
+        # Employee pattern features
+        employee_stats = df.groupby('employee_id').agg({
+            'transaction_total': ['mean', 'std'],
+            'discount_amount': ['mean', 'count'],
+            'void_flag': 'sum',
+            'refund_flag': 'sum'
+        })
+        
+        # Store pattern features
+        store_stats = df.groupby('store_id').agg({
+            'transaction_total': ['mean', 'std'],
+            'discount_amount': ['mean', 'std']
+        })
+        
+        return features
+        
+    def detect_anomalies(self, features):
+        """Score transactions for anomaly detection"""
+        # Load model from SageMaker
+        predictor = sagemaker.predictor.Predictor(
+            endpoint_name='retail-loss-prevention'
+        )
+        
+        # Get predictions
+        predictions = predictor.predict(features)
+        
+        return predictions
+        
+    def generate_alerts(self, predictions, threshold=0.8):
+        """Generate alerts for high-risk transactions"""
+        high_risk = predictions[predictions['risk_score'] > threshold]
+        
+        for _, transaction in high_risk.iterrows():
+            alert = {
+                'alert_id': str(uuid.uuid4()),
+                'transaction_id': transaction['transaction_id'],
+                'risk_score': float(transaction['risk_score']),
+                'alert_time': datetime.now().isoformat(),
+                'status': 'NEW'
+            }
+            
+            # Write to DynamoDB alerts table
+            self.dynamodb.Table('loss_prevention_alerts').put_item(
+                Item=alert
+            )
+            
+    def update_dashboard(self):
+        """Update QuickSight dashboard metrics"""
+        metrics = {
+            'total_alerts': len(self.get_daily_alerts()),
+            'false_positives': self.calculate_false_positives(),
+            'potential_loss': self.calculate_potential_loss(),
+            'alert_accuracy': self.calculate_accuracy()
+        }
+        
+        # Update CloudWatch metrics
+        cloudwatch = boto3.client('cloudwatch')
+        cloudwatch.put_metric_data(
+            Namespace='RetailLossPrevention',
+            MetricData=[
+                {
+                    'MetricName': key,
+                    'Value': value,
+                    'Unit': 'Count'
+                } for key, value in metrics.items()
+            ]
+        )
+
+def lambda_handler(event, context):
+    """AWS Lambda entry point for real-time scoring"""
+    detector = RetailLossDetection()
+    
+    # Get transaction data
+    transaction = event['detail']
+    
+    # Extract features
+    features = detector.engineer_features(pd.DataFrame([transaction]))
+    
+    # Get prediction
+    prediction = detector.detect_anomalies(features)
+    
+    # Generate alert if needed
+    if prediction['risk_score'][0] > 0.8:
+        detector.generate_alerts(prediction)
+    
+    return {
+        'transaction_id': transaction['transaction_id'],
+        'risk_score': float(prediction['risk_score'][0])
+    }
+	
+	Key components explained:
+
+Data Pipeline:
+
+
+Real-time POS transaction ingestion
+Feature engineering (employee patterns, store patterns, time patterns)
+Automated model retraining with feedback loop
+
+
+Model Operations:
+
+
+Daily model performance monitoring
+Alert accuracy tracking
+False positive reduction through feedback
+Model version control
+
+
+Business Integration:
+
+
+API for LP team investigation portal
+QuickSight dashboards for metrics
+Alert workflow management
+ROI tracking
+
+
+Alert Types:
+
+
+Unusual discount patterns
+Void/refund anomalies
+Employee-specific patterns
+Time-based anomalies
+Cross-store pattern detection
+
+Would you like me to elaborate on any specific aspect of this implementation?
