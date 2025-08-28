@@ -37,6 +37,7 @@ graph TD
     FileIO --> Reasoning[Sequential Reasoning]
     Reasoning --> Log[Notion / Local Report]
     Log --> Done([Task Completed])
+```
 
 # AI_Projects
 
